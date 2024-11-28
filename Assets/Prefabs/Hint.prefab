@@ -218,3 +218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3142356699932781685}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  clearedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  overflowColor: {r: 0.7, g: 0.21000001, b: 0.21000001, a: 1}

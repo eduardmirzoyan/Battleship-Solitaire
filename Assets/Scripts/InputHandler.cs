@@ -24,6 +24,13 @@ public class InputHandler : MonoBehaviour
             return;
         }
         instance = this;
+
+        GameEvents.instance.OnGameStart += Initialize;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.instance.OnGameStart -= Initialize;
     }
 
     private void Update()
@@ -32,12 +39,20 @@ public class InputHandler : MonoBehaviour
         HandleClick();
     }
 
+    #region Helpers
+
+    private void Initialize(GameData gameData)
+    {
+        this.gridSize = gameData.gridSize;
+    }
+
     private void HandleClick()
     {
         // On left click
         if (Input.GetMouseButtonDown(0))
         {
-
+            // Toggle state of tile
+            GameManager.instance.ToggleTile(previousPosition);
         }
     }
 
@@ -69,8 +84,5 @@ public class InputHandler : MonoBehaviour
         previousPosition = currentPosition;
     }
 
-    public void Initialize(int gridSize)
-    {
-        this.gridSize = gridSize;
-    }
+    #endregion
 }

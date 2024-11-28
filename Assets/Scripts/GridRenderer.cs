@@ -12,12 +12,99 @@ public class GridRenderer : MonoBehaviour
     [SerializeField] private Tile waterTile;
     [SerializeField] private Tile paddingTile;
     [SerializeField] private Tile hiddenTile;
+    [SerializeField] private Tile guessWaterTile;
+    [SerializeField] private Tile guessShipTile;
     [SerializeField] private GameObject hintPrefab;
+    [SerializeField] private Transform hintsTransform;
 
     [Header("Settings")]
     [SerializeField] private int paddingSize = 5;
 
-    public void RenderShipGrid(int[,] grid)
+    [Header("Debugging")]
+    [SerializeField] private List<HintRenderer> columnHints;
+    [SerializeField] private List<HintRenderer> rowHints;
+
+    private void Awake()
+    {
+        GameEvents.instance.OnGameStart += RenderGrids;
+        GameEvents.instance.OnGameUpdate += UpdateGrid;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.instance.OnGameStart -= RenderGrids;
+        GameEvents.instance.OnGameUpdate -= UpdateGrid;
+    }
+
+    private void RenderGrids(GameData gameData)
+    {
+        RenderShipGrid(gameData.shipGrid);
+        RenderGuessGrid(gameData.guessGrid);
+        RenderHints(gameData.shipGrid);
+        UpdateGrid(gameData);
+    }
+
+    private void UpdateGrid(GameData gameData)
+    {
+        int n = gameData.gridSize;
+
+        // Update the state of each tile
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                GuessState state = gameData.guessGrid[i, j];
+                SetGuessTile(new Vector3Int(i, j), state);
+            }
+        }
+
+        // Update column hints
+        for (int i = 0; i < n; i++)
+        {
+            int colActualShips = 0;
+            int colGuessedShips = 0;
+
+            for (int j = 0; j < n; j++)
+            {
+                if (gameData.shipGrid[i, j] == TileState.Ship)
+                    colActualShips++;
+
+                if (gameData.guessGrid[i, j] == GuessState.Ship || gameData.guessGrid[i, j] == GuessState.Revealed)
+                    colGuessedShips++;
+            }
+
+            int indicator = colActualShips - colGuessedShips;
+
+            columnHints[i].SetValue(colActualShips);
+            columnHints[i].SetState(indicator);
+        }
+
+        // Update row hints
+        for (int j = 0; j < n; j++)
+        {
+            int rowActualShips = 0;
+            int rowGuessedShips = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (gameData.shipGrid[i, j] == TileState.Ship)
+                    rowActualShips++;
+
+                if (gameData.guessGrid[i, j] == GuessState.Ship || gameData.guessGrid[i, j] == GuessState.Revealed)
+                    rowGuessedShips++;
+            }
+
+
+            int indicator = rowActualShips - rowGuessedShips;
+
+            rowHints[j].SetValue(rowActualShips);
+            rowHints[j].SetState(indicator);
+        }
+    }
+
+    #region Helpers
+
+    private void RenderShipGrid(TileState[,] grid)
     {
         shipTilemap.ClearAllTiles();
 
@@ -34,7 +121,7 @@ public class GridRenderer : MonoBehaviour
                 }
                 else
                 {
-                    if (grid[i, j] == 1)
+                    if (grid[i, j] == TileState.Ship)
                         shipTilemap.SetTile(new Vector3Int(i, j), shipTile);
                     else
                         shipTilemap.SetTile(new Vector3Int(i, j), waterTile);
@@ -47,35 +134,28 @@ public class GridRenderer : MonoBehaviour
         CameraManager.instance.MoveTo(position);
     }
 
-    public void RenderHints(int[,] grid)
+    private void RenderHints(TileState[,] grid)
     {
         int n = grid.GetLength(0);
+
+        columnHints = new();
         for (int i = 0; i < n; i++)
         {
-            int colSum = 0;
-            for (int j = 0; j < n; j++)
-                if (grid[i, j] == 1)
-                    colSum++;
-
             var worldPos = shipTilemap.GetCellCenterWorld(new Vector3Int(i, n));
-            var hint = Instantiate(hintPrefab, worldPos, Quaternion.identity, transform).GetComponent<HintRenderer>();
-            hint.Initialize(colSum);
+            var hint = Instantiate(hintPrefab, worldPos, Quaternion.identity, hintsTransform).GetComponent<HintRenderer>();
+            columnHints.Add(hint);
         }
 
+        rowHints = new();
         for (int j = 0; j < n; j++)
         {
-            int rowSum = 0;
-            for (int i = 0; i < n; i++)
-                if (grid[i, j] == 1)
-                    rowSum++;
-
             var worldPos = shipTilemap.GetCellCenterWorld(new Vector3Int(-1, j));
-            var hint = Instantiate(hintPrefab, worldPos, Quaternion.identity, transform).GetComponent<HintRenderer>();
-            hint.Initialize(rowSum);
+            var hint = Instantiate(hintPrefab, worldPos, Quaternion.identity, hintsTransform).GetComponent<HintRenderer>();
+            rowHints.Add(hint);
         }
     }
 
-    public void RenderHiddenGrid(int[,] grid)
+    private void RenderGuessGrid(GuessState[,] grid)
     {
         // Reset tilemap
         hiddenTilemap.ClearAllTiles();
@@ -84,7 +164,23 @@ public class GridRenderer : MonoBehaviour
         int n = grid.GetLength(0);
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
-                if (grid[i, j] == 0)
+                if (grid[i, j] == GuessState.Unknown)
                     hiddenTilemap.SetTile(new Vector3Int(i, j), hiddenTile);
     }
+
+    public void SetGuessTile(Vector3Int position, GuessState state)
+    {
+        // Get tile based on new state
+        Tile tile = state switch
+        {
+            GuessState.Unknown => hiddenTile,
+            GuessState.Water => guessWaterTile,
+            GuessState.Ship => guessShipTile,
+            _ => null,
+        };
+
+        hiddenTilemap.SetTile(position, tile);
+    }
+
+    #endregion
 }

@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &3159772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3159773}
+  m_Layer: 0
+  m_Name: Hints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3159773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3159772}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1796098111}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &58463672
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,9 +320,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridRenderer: {fileID: 1796098112}
-  gridSize: 10
+  gameData:
+    gridSize: 0
+  gridSize: 8
   seed: 0
-  numRevealed: 2
+  numRevealed: 5
 --- !u!114 &283383524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,6 +756,7 @@ Transform:
   - {fileID: 1125838059}
   - {fileID: 549772152}
   - {fileID: 58463673}
+  - {fileID: 3159773}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -744,5 +778,52 @@ MonoBehaviour:
   waterTile: {fileID: 11400000, guid: b771241eefe8ba043bd313482420ad74, type: 2}
   paddingTile: {fileID: 11400000, guid: e7c63cc564468f94abd6d0a4f23c3f28, type: 2}
   hiddenTile: {fileID: 11400000, guid: 855df9bb73c601840a7f08632e94773c, type: 2}
+  guessWaterTile: {fileID: 11400000, guid: b927ce7abca526d41bc965498708803a, type: 2}
+  guessShipTile: {fileID: 11400000, guid: d2db2f73c6a7bcd42ac94830f5a18e22, type: 2}
   hintPrefab: {fileID: 3142356701399054606, guid: 8c5a8e8b126336447ba76df5ab510bac, type: 3}
+  hintsTransform: {fileID: 3159773}
   paddingSize: 5
+--- !u!1 &1819832137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1819832138}
+  - component: {fileID: 1819832139}
+  m_Layer: 0
+  m_Name: Game Events
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1819832138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819832137}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1819832139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819832137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b40e8854cd01b45b4b2d2c34d18c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
