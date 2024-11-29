@@ -12,6 +12,10 @@ public class InputHandler : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private Vector3Int previousPosition;
     [SerializeField] private int gridSize;
+    [SerializeField] private bool isDragging;
+    [SerializeField] private GuessState dragType;
+
+    private GameData gameData;
 
     public static InputHandler instance;
 
@@ -24,7 +28,10 @@ public class InputHandler : MonoBehaviour
             return;
         }
         instance = this;
+    }
 
+    private void Start()
+    {
         GameEvents.instance.OnGameStart += Initialize;
     }
 
@@ -36,23 +43,54 @@ public class InputHandler : MonoBehaviour
     private void Update()
     {
         HandleHover();
-        HandleClick();
+        HandleDrag();
+    }
+
+    private void FixedUpdate()
+    {
+        if (isDragging)
+        {
+            // Error check
+            if (previousPosition.x < 0 || previousPosition.x >= gridSize || previousPosition.y < 0 || previousPosition.y >= gridSize)
+                return;
+
+            // Only if you are hoving a valid type
+            GuessState state = gameData.guessGrid[previousPosition.x, previousPosition.y];
+            if (state == dragType)
+                GameManager.instance.ToggleTile(previousPosition);
+        }
     }
 
     #region Helpers
 
     private void Initialize(GameData gameData)
     {
+        this.gameData = gameData;
         this.gridSize = gameData.gridSize;
     }
 
-    private void HandleClick()
+    private void HandleDrag()
     {
-        // On left click
+        // Start drag
         if (Input.GetMouseButtonDown(0))
         {
-            // Toggle state of tile
-            GameManager.instance.ToggleTile(previousPosition);
+            // Error check
+            if (previousPosition.x < 0 || previousPosition.x >= gridSize || previousPosition.y < 0 || previousPosition.y >= gridSize)
+                return;
+
+            isDragging = true;
+
+            // Store start type
+            dragType = gameData.guessGrid[previousPosition.x, previousPosition.y];
+        }
+
+        // End drag
+        if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
+
+            // Clear start type
+            dragType = GuessState.Revealed;
         }
     }
 

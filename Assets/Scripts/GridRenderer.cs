@@ -24,7 +24,7 @@ public class GridRenderer : MonoBehaviour
     [SerializeField] private List<HintRenderer> columnHints;
     [SerializeField] private List<HintRenderer> rowHints;
 
-    private void Awake()
+    private void Start()
     {
         GameEvents.instance.OnGameStart += RenderGrids;
         GameEvents.instance.OnGameUpdate += UpdateGrid;
@@ -143,6 +143,7 @@ public class GridRenderer : MonoBehaviour
         {
             var worldPos = shipTilemap.GetCellCenterWorld(new Vector3Int(i, n));
             var hint = Instantiate(hintPrefab, worldPos, Quaternion.identity, hintsTransform).GetComponent<HintRenderer>();
+            hint.Initialize(i, false);
             columnHints.Add(hint);
         }
 
@@ -151,6 +152,7 @@ public class GridRenderer : MonoBehaviour
         {
             var worldPos = shipTilemap.GetCellCenterWorld(new Vector3Int(-1, j));
             var hint = Instantiate(hintPrefab, worldPos, Quaternion.identity, hintsTransform).GetComponent<HintRenderer>();
+            hint.Initialize(j, true);
             rowHints.Add(hint);
         }
     }

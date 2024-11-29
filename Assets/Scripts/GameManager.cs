@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Components")]
-    [SerializeField] private GridRenderer gridRenderer;
-
     [Header("Data")]
     [SerializeField] private GameData gameData;
 
@@ -30,15 +27,21 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(DelayedStart());
+    }
+
+    private IEnumerator DelayedStart()
+    {
+        yield return new WaitForEndOfFrame();
+
         var shipGrid = GridGenerator.GenerateShipGrid(seed, gridSize);
         var guessGrid = GridGenerator.GenerateHiddenGrid(seed, shipGrid, numRevealed);
 
         if (shipGrid == null || guessGrid == null)
-            return;
+            yield return null;
 
         // Create game
         gameData = new GameData(shipGrid, guessGrid);
-
         GameEvents.instance.TriggerOnGameStart(gameData);
     }
 
@@ -50,7 +53,7 @@ public class GameManager : MonoBehaviour
         // Error check
         if (position.x < 0 || position.x >= data.gridSize || position.y < 0 || position.y >= data.gridSize)
         {
-            print("Selected position out of bounds: " + position);
+            // print("Selected position out of bounds: " + position);
             return;
         }
 
@@ -75,6 +78,29 @@ public class GameManager : MonoBehaviour
 
         // Check if game is over
         CheckWin(data);
+    }
+
+    public void ClearLine(bool isRow, int index)
+    {
+        // Cache data
+        GameData data = gameData;
+        int n = data.gridSize;
+
+        if (isRow)
+        {
+            for (int i = 0; i < n; i++)
+                if (data.guessGrid[i, index] == GuessState.Unknown)
+                    data.guessGrid[i, index] = GuessState.Water;
+        }
+        else
+        {
+            for (int i = 0; i < n; i++)
+                if (data.guessGrid[index, i] == GuessState.Unknown)
+                    data.guessGrid[index, i] = GuessState.Water;
+        }
+
+        // Update visuals
+        GameEvents.instance.TriggerOnGameUpdate(data);
     }
 
     private void CheckWin(GameData data)
