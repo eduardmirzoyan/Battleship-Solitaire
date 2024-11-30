@@ -47,7 +47,7 @@ public class GridRenderer : MonoBehaviour
 
     private void UpdateGrid(GameData gameData)
     {
-        int n = gameData.gridSize;
+        int n = gameData.GridSize;
 
         // Update the state of each tile
         for (int i = 0; i < n; i++)

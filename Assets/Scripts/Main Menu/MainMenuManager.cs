@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Globalization;
 using System;
 
 public class MainMenuManager : MonoBehaviour
@@ -51,12 +52,12 @@ public class MainMenuManager : MonoBehaviour
     public void StartLevel(int index)
     {
 
+        // Ditch last terminator character
+        string str = seedText.text[..^1];
 
-        // Read seed data
-        string seedStr = seedText.text;
-        print("Seed=" + seedText.text + "|");
-        int seed = 0; // Convert.ToInt32(seedStr); // int.TryParse("0", out seed) ? seed : 0;
-        print("Int Seed=" + seed);
+        bool success = int.TryParse(str, out int seed);
+        if (!success)
+            seed = UnityEngine.Random.Range(1, 1000000); // Random seed between 1 - 1M
 
         int defaultHints = 3;
 

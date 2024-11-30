@@ -66,7 +66,7 @@ public class InputHandler : MonoBehaviour
     private void Initialize(GameData gameData)
     {
         this.gameData = gameData;
-        this.gridSize = gameData.gridSize;
+        this.gridSize = gameData.GridSize;
     }
 
     private void HandleDrag()

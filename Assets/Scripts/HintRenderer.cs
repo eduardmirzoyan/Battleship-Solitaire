@@ -17,6 +17,16 @@ public class HintRenderer : MonoBehaviour
     [SerializeField] private int index;
     [SerializeField] private bool isRow;
 
+    public bool IsCleared
+    {
+        get
+        {
+            return text.color == clearedColor;
+        }
+    }
+
+    private bool isSelected;
+
     public void Initialize(int index, bool isRow)
     {
         this.index = index;
@@ -41,19 +51,24 @@ public class HintRenderer : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        text.fontStyle = FontStyles.Bold;
-        text.color = new Color(text.color.r, text.color.g, text.color.b, 0.75f);
+        if (IsCleared)
+        {
+            text.fontStyle = FontStyles.Bold;
+            text.color = new Color(text.color.r, text.color.g, text.color.b, 0.75f);
+            isSelected = true;
+        }
     }
 
     private void OnMouseExit()
     {
         text.fontStyle = FontStyles.Normal;
         text.color = new Color(text.color.r, text.color.g, text.color.b, 1f);
+        isSelected = false;
     }
 
     private void OnMouseDown()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isSelected)
         {
             GameManager.instance.ClearLine(isRow, index);
         }

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GridGenerator
 {
+    private const int MAX_ATTEMPTS = 1000;
+
     public static int[,] GenerateShipGrid(int seed, int size, int[] ships)
     {
         // Use random seed if input seed is 0
@@ -69,9 +71,12 @@ public class GridGenerator
 
     private static bool RandomShip(System.Random rng, int[,] grid, List<Vector2Int> validLocations, int shipSize, bool faceHorizontal)
     {
-        int ATTEMPTS = 100;
-        for (int a = 0; a < ATTEMPTS; a++)
+        for (int a = 0; a < MAX_ATTEMPTS; a++)
         {
+            // If we are out of valid locations, then stop
+            if (validLocations.Count == 0)
+                break;
+
             // Get random valid location
             int index = rng.Next(validLocations.Count);
             var location = validLocations[index];

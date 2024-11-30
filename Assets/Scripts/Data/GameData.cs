@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public enum TileState { Water, Ship }
 public enum GuessState { Unknown, Revealed, Water, Ship }
@@ -8,12 +5,20 @@ public enum GuessState { Unknown, Revealed, Water, Ship }
 [System.Serializable]
 public class GameData
 {
+    public LevelData levelData;
     public TileState[,] shipGrid;
     public GuessState[,] guessGrid;
-    public int gridSize;
-
-    public GameData(int[,] shipGrid, int[,] guessGrid)
+    public int GridSize
     {
+        get
+        {
+            return levelData.gridSize;
+        }
+    }
+
+    public GameData(LevelData levelData, int[,] shipGrid, int[,] guessGrid)
+    {
+        this.levelData = levelData;
         int n = shipGrid.GetLength(0);
 
         // Init ship grid
@@ -27,7 +32,5 @@ public class GameData
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
                 this.guessGrid[i, j] = guessGrid[i, j] == 1 ? GuessState.Revealed : GuessState.Unknown;
-
-        gridSize = n;
     }
 }

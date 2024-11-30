@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Transform mapTransform;
     [SerializeField] private Transform shipMenuTransform;
+    [SerializeField] private ShipMenuUI shipInfoUI;
 
     [Header("Data")]
     [SerializeField] private GameData gameData;
@@ -29,20 +30,19 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Open scene
-        TransitionManager.instance.OpenScene();
-        LeanTween.moveX(mapTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack); ;
-
-        // Get data from manager
-        LevelData savedData = DataManager.instance.Load();
-
         // Start game waiting a frame
-        StartCoroutine(DelayedStart(savedData));
+        StartCoroutine(SetupGame());
     }
 
-    private IEnumerator DelayedStart(LevelData levelData)
+    private IEnumerator SetupGame()
     {
+        // Open scene
+        TransitionManager.instance.OpenScene();
+
         yield return new WaitForEndOfFrame();
+
+        // Get data from manager
+        LevelData levelData = DataManager.instance.Load();
 
         var shipGrid = GridGenerator.GenerateShipGrid(levelData.seed, levelData.gridSize, levelData.ships);
         var guessGrid = GridGenerator.GenerateHiddenGrid(levelData.seed, shipGrid, levelData.numHints);
@@ -51,8 +51,13 @@ public class GameManager : MonoBehaviour
             yield return null;
 
         // Create game
-        gameData = new GameData(shipGrid, guessGrid);
+        gameData = new GameData(levelData, shipGrid, guessGrid);
         GameEvents.instance.TriggerOnGameStart(gameData);
+
+        // Pan screen to board
+        LeanTween.moveX(mapTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
+        yield return new WaitForSeconds(transitionTime);
+        shipInfoUI.Open();
     }
 
     public void ToggleTile(Vector3Int position)
@@ -61,7 +66,7 @@ public class GameManager : MonoBehaviour
         GameData data = gameData;
 
         // Error check
-        if (position.x < 0 || position.x >= data.gridSize || position.y < 0 || position.y >= data.gridSize)
+        if (position.x < 0 || position.x >= data.GridSize || position.y < 0 || position.y >= data.GridSize)
         {
             // print("Selected position out of bounds: " + position);
             return;
@@ -94,7 +99,7 @@ public class GameManager : MonoBehaviour
     {
         // Cache data
         GameData data = gameData;
-        int n = data.gridSize;
+        int n = data.GridSize;
 
         if (isRow)
         {
@@ -113,10 +118,24 @@ public class GameManager : MonoBehaviour
         GameEvents.instance.TriggerOnGameUpdate(data);
     }
 
+    public void Restart()
+    {
+        // Reload the current scene
+        TransitionManager.instance.ReloadScene();
+    }
+
+    public void GoToMainMenu()
+    {
+        // Go back to main menu scene
+        TransitionManager.instance.LoadMainMenuScene();
+    }
+
+    #region Helpers
+
     private void CheckWin(GameData data)
     {
         bool hasWon = true;
-        int n = data.gridSize;
+        int n = data.GridSize;
 
         for (int i = 0; i < n; i++)
         {
@@ -149,4 +168,6 @@ public class GameManager : MonoBehaviour
             GameEvents.instance.TriggerOnGameEnd(data);
         }
     }
+
+    #endregion
 }
