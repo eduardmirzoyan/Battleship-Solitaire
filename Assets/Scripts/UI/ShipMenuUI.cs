@@ -6,22 +6,27 @@ using TMPro;
 public class ShipMenuUI : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private Transform gameWinTranform;
+    [SerializeField] private RectTransform rectTransform;
     [SerializeField] private TextMeshProUGUI seedLabel;
     [SerializeField] private TextMeshProUGUI[] shipCountLabels;
     [SerializeField] private GameObject[] shipCountObjects;
 
     [Header("Settings")]
-    [SerializeField] private float fadeDuration = 1f;
+    [SerializeField] private float homeXPosition = 660f;
+    [SerializeField] private float transitionDuration = 1f;
+    [SerializeField] private float winTransitionDuration = 1f;
 
     private void Start()
     {
         GameEvents.instance.OnGameStart += SetupShips;
+        GameEvents.instance.OnGameEnd += ShowWin;
     }
 
     private void OnDestroy()
     {
         GameEvents.instance.OnGameStart -= SetupShips;
+        GameEvents.instance.OnGameEnd -= ShowWin;
     }
 
     private void SetupShips(GameData gameData)
@@ -40,35 +45,21 @@ public class ShipMenuUI : MonoBehaviour
         }
 
         seedLabel.text = $"Seed: {gameData.levelData.seed}";
+
+        // Start hovering the window
+        LeanTween.moveLocalY(rectTransform.gameObject, 20f, 2f).setEase(LeanTweenType.easeInOutSine).setLoopPingPong();
+    }
+
+    private void ShowWin(GameData _)
+    {
+        // Show win UI
+        float angle = Random.Range(-10f, 10f);
+        LeanTween.rotateZ(gameWinTranform.gameObject, angle, winTransitionDuration);
+        LeanTween.scale(gameWinTranform.gameObject, Vector3.one, winTransitionDuration).setEase(LeanTweenType.easeOutBack);
     }
 
     public void Open()
     {
-        // Fade in UI
-        StopAllCoroutines();
-        StartCoroutine(Fade(0f, 1f, fadeDuration));
-    }
-
-    public void Close()
-    {
-        // Fade out UI
-        StopAllCoroutines();
-        StartCoroutine(Fade(1f, 0f, fadeDuration));
-    }
-
-    private IEnumerator Fade(float start, float end, float duration)
-    {
-        canvasGroup.alpha = start;
-
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            canvasGroup.alpha = Mathf.Lerp(start, end, elapsed / duration);
-
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        canvasGroup.alpha = end;
+        LeanTween.moveLocalX(rectTransform.gameObject, homeXPosition, transitionDuration).setEase(LeanTweenType.easeInOutBack);
     }
 }

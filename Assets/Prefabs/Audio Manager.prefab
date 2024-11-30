@@ -44,7 +44,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4ce86d0df417847a6ffd3a0d8eb3bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ostSounds: []
+  ostSounds:
+  - name: Background 0
+    audioClips:
+    - {fileID: 8300000, guid: da635b2045092f4478a7edbff60934d3, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    audioSource: {fileID: 0}
+    audioMixerGroup: {fileID: 3010432625692923313, guid: 800867c0817e27245b5b7bd8063d57cb, type: 2}
+  - name: Background 1
+    audioClips:
+    - {fileID: 8300000, guid: da635b2045092f4478a7edbff60934d3, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    audioSource: {fileID: 0}
+    audioMixerGroup: {fileID: 3010432625692923313, guid: 800867c0817e27245b5b7bd8063d57cb, type: 2}
   sfxSounds: []
   fadeTime: 1
   debugName: 

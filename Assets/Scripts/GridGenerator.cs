@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GridGenerator
 {
-    private const int MAX_ATTEMPTS = 1000;
+    private const int MAX_ATTEMPTS = 5000;
 
     public static int[,] GenerateShipGrid(int seed, int size, int[] ships)
     {
@@ -21,8 +21,7 @@ public class GridGenerator
         // Generate board
         foreach (int ship in ships)
         {
-            bool faceHorizontal = Convert.ToBoolean(rng.Next(2));
-            bool success = RandomShip(rng, grid, validLocations, ship, faceHorizontal);
+            bool success = RandomShip(rng, grid, validLocations, ship);
             if (!success)
             {
                 Debug.Log("Ran out of tries for random ship");
@@ -69,7 +68,7 @@ public class GridGenerator
         return grid;
     }
 
-    private static bool RandomShip(System.Random rng, int[,] grid, List<Vector2Int> validLocations, int shipSize, bool faceHorizontal)
+    private static bool RandomShip(System.Random rng, int[,] grid, List<Vector2Int> validLocations, int shipSize)
     {
         for (int a = 0; a < MAX_ATTEMPTS; a++)
         {
@@ -80,6 +79,9 @@ public class GridGenerator
             // Get random valid location
             int index = rng.Next(validLocations.Count);
             var location = validLocations[index];
+
+            // Choose random direction
+            bool faceHorizontal = Convert.ToBoolean(rng.Next(2));
 
             // Get ship locations
             var locations = GetShipLocations(location, shipSize, faceHorizontal);

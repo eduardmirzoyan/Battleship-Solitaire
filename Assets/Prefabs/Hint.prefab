@@ -47,9 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 755140479165198675}
+  offset: 0.25
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   clearedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   overflowColor: {r: 0.7, g: 0.21000001, b: 0.21000001, a: 1}
+  endGameTransitionDuration: 1
   index: 0
   isRow: 0
 --- !u!65 &4736688204746025689
@@ -123,7 +125,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 8479614060242569841, guid: f4d0d98ea932d7c479b73d8df4c0f2b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -167,8 +169,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f4d0d98ea932d7c479b73d8df4c0f2b8, type: 2}
+  m_sharedMaterial: {fileID: 8479614060242569841, guid: f4d0d98ea932d7c479b73d8df4c0f2b8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -199,7 +201,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 32
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

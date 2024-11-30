@@ -14,6 +14,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private int gridSize;
     [SerializeField] private bool isDragging;
     [SerializeField] private GuessState dragType;
+    [SerializeField] private bool isGameOver;
 
     private GameData gameData;
 
@@ -33,21 +34,29 @@ public class InputHandler : MonoBehaviour
     private void Start()
     {
         GameEvents.instance.OnGameStart += Initialize;
+        GameEvents.instance.OnGameEnd += Uninitialize;
     }
 
     private void OnDestroy()
     {
         GameEvents.instance.OnGameStart -= Initialize;
+        GameEvents.instance.OnGameEnd -= Uninitialize;
     }
 
     private void Update()
     {
+        // Don't allow input if game is over
+        if (isGameOver) return;
+
         HandleHover();
         HandleDrag();
     }
 
     private void FixedUpdate()
     {
+        // Don't allow input if game is over
+        if (isGameOver) return;
+
         if (isDragging)
         {
             // Error check
@@ -67,6 +76,19 @@ public class InputHandler : MonoBehaviour
     {
         this.gameData = gameData;
         this.gridSize = gameData.GridSize;
+        this.isGameOver = false;
+    }
+
+    private void Uninitialize(GameData _)
+    {
+        this.gameData = null;
+        this.gridSize = 0;
+        this.isGameOver = true;
+
+        isDragging = false;
+        dragType = GuessState.Revealed;
+        selectTilemap.ClearAllTiles();
+        previousPosition = Vector3Int.back;
     }
 
     private void HandleDrag()

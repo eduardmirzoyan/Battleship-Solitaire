@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.Globalization;
-using System;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -11,11 +9,14 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Transform mainMenuTransform;
     [SerializeField] private Transform levelSelectTransform;
     [SerializeField] private Transform backgroundMapTransform;
+    [SerializeField] private Transform instructionsTransform;
     [SerializeField] private TextMeshProUGUI seedText;
 
     [Header("Settings")]
     [SerializeField] private float transitionPositionX = -1500f;
     [SerializeField] private float transitionTime = 3f;
+    [SerializeField] private float hoverStrength = 10f;
+    [SerializeField] private float hoverSpeed = 2;
 
     public static MainMenuManager instance;
     private void Awake()
@@ -33,10 +34,22 @@ public class MainMenuManager : MonoBehaviour
     {
         // Open scene
         TransitionManager.instance.OpenScene();
+
+        // Start hovering the various windwos in the scene
+        StartWindowHovers();
+    }
+
+    private void StartWindowHovers()
+    {
+        // Start bobbing motion
+        LeanTween.moveLocalY(mainMenuTransform.gameObject, hoverStrength, hoverSpeed).setEase(LeanTweenType.easeInOutSine).setLoopPingPong();
+        LeanTween.moveLocalY(instructionsTransform.gameObject, hoverStrength, hoverSpeed).setEase(LeanTweenType.easeInOutSine).setLoopPingPong();
+        LeanTween.moveLocalY(levelSelectTransform.gameObject, hoverStrength, hoverSpeed).setEase(LeanTweenType.easeInOutSine).setLoopPingPong();
     }
 
     public void GoToLevelSelect()
     {
+        // Move rightward
         LeanTween.moveLocalX(mainMenuTransform.gameObject, transitionPositionX, transitionTime).setEase(LeanTweenType.easeInOutBack);
         LeanTween.moveLocalX(levelSelectTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
         LeanTween.moveX(backgroundMapTransform.gameObject, transitionPositionX / 50f, transitionTime).setEase(LeanTweenType.easeInOutBack);
@@ -44,6 +57,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        // Move leftward
         LeanTween.moveLocalX(mainMenuTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
         LeanTween.moveLocalX(levelSelectTransform.gameObject, -transitionPositionX, transitionTime).setEase(LeanTweenType.easeInOutBack);
         LeanTween.moveX(backgroundMapTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
@@ -59,14 +73,12 @@ public class MainMenuManager : MonoBehaviour
         if (!success)
             seed = UnityEngine.Random.Range(1, 1000000); // Random seed between 1 - 1M
 
-        int defaultHints = 3;
-
         var levelData = index switch
         {
-            1 => new LevelData(seed, 6, new int[] { 3, 2, 2, 1, 1, 1 }, defaultHints), // Easy
-            2 => new LevelData(seed, 8, new int[] { 3, 3, 2, 2, 2, 1, 1, 1 }, defaultHints), // Medium
-            3 => new LevelData(seed, 10, new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 }, defaultHints), // Hard
-            _ => new LevelData(seed, 1, new int[] { 1, 1, 1 }, defaultHints), // Default
+            1 => new LevelData(seed, 6, new int[] { 3, 2, 2, 1, 1, 1 }, 3), // Easy
+            2 => new LevelData(seed, 8, new int[] { 3, 3, 2, 2, 2, 1, 1, 1 }, 5), // Medium
+            3 => new LevelData(seed, 10, new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 }, 7), // Hard
+            _ => new LevelData(seed, 1, new int[] { 1, 1, 1 }, 1), // Default
         };
 
         // Save level
@@ -78,7 +90,7 @@ public class MainMenuManager : MonoBehaviour
 
     private IEnumerator CloseScene()
     {
-        // Fade out
+        // Fade rightward
         LeanTween.moveLocalX(levelSelectTransform.gameObject, 2 * transitionPositionX, transitionTime).setEase(LeanTweenType.easeInOutBack);
         LeanTween.moveX(backgroundMapTransform.gameObject, 2 * (transitionPositionX / 50f), transitionTime).setEase(LeanTweenType.easeInOutBack);
 
@@ -88,19 +100,20 @@ public class MainMenuManager : MonoBehaviour
         TransitionManager.instance.LoadNextScene();
     }
 
-    public void HowToPlay()
+    public void OpenIntructions()
     {
-        // Debug
-        print("Open Help Screen");
+        // Move leftward
+        LeanTween.moveLocalX(mainMenuTransform.gameObject, -transitionPositionX, transitionTime).setEase(LeanTweenType.easeInOutBack);
+        LeanTween.moveLocalX(instructionsTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
+        LeanTween.moveX(backgroundMapTransform.gameObject, -transitionPositionX / 50f, transitionTime).setEase(LeanTweenType.easeInOutBack);
     }
 
-    public void OpenSettings()
+    public void CloseIntructions()
     {
-        // Debug
-        print("Open Settings");
-
-        // Open settings
-        // SettingsManager.instance.Open();
+        // Move rightward
+        LeanTween.moveLocalX(mainMenuTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
+        LeanTween.moveLocalX(instructionsTransform.gameObject, transitionPositionX, transitionTime).setEase(LeanTweenType.easeInOutBack);
+        LeanTween.moveX(backgroundMapTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
     }
 
     public void QuitGame()

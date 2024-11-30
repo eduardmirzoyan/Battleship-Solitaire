@@ -66,7 +66,7 @@ public class TransitionManager : MonoBehaviour
     public void ReloadScene()
     {
         // Stop any background music
-        AudioManager.instance.StopOST("Background " + GetSceneIndex());
+        // AudioManager.instance.StopOST("Background " + GetSceneIndex());
 
         // Stop any transition if one was happening
         if (coroutine != null) StopCoroutine(coroutine);
