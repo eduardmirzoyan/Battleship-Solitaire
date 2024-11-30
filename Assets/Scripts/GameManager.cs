@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] private Transform mapTransform;
+    [SerializeField] private Transform shipMenuTransform;
+
     [Header("Data")]
     [SerializeField] private GameData gameData;
 
     [Header("Settings")]
-    [SerializeField] private int gridSize = 10;
-    [SerializeField] private int seed = 0;
-    [SerializeField] private int numRevealed = 2;
+    [SerializeField] private float transitionTime = 3f;
 
     public static GameManager instance;
 
@@ -27,15 +29,23 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(DelayedStart());
+        // Open scene
+        TransitionManager.instance.OpenScene();
+        LeanTween.moveX(mapTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack); ;
+
+        // Get data from manager
+        LevelData savedData = DataManager.instance.Load();
+
+        // Start game waiting a frame
+        StartCoroutine(DelayedStart(savedData));
     }
 
-    private IEnumerator DelayedStart()
+    private IEnumerator DelayedStart(LevelData levelData)
     {
         yield return new WaitForEndOfFrame();
 
-        var shipGrid = GridGenerator.GenerateShipGrid(seed, gridSize);
-        var guessGrid = GridGenerator.GenerateHiddenGrid(seed, shipGrid, numRevealed);
+        var shipGrid = GridGenerator.GenerateShipGrid(levelData.seed, levelData.gridSize, levelData.ships);
+        var guessGrid = GridGenerator.GenerateHiddenGrid(levelData.seed, shipGrid, levelData.numHints);
 
         if (shipGrid == null || guessGrid == null)
             yield return null;

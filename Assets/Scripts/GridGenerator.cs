@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GridGenerator
 {
-    public static int[,] GenerateShipGrid(int seed, int size)
+    public static int[,] GenerateShipGrid(int seed, int size, int[] ships)
     {
         // Use random seed if input seed is 0
         System.Random rng = seed == 0 ? new() : new(seed);
@@ -17,7 +17,6 @@ public class GridGenerator
                 validLocations.Add(new Vector2Int(i, j));
 
         // Generate board
-        int[] ships = new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
         foreach (int ship in ships)
         {
             bool faceHorizontal = Convert.ToBoolean(rng.Next(2));
@@ -28,18 +27,6 @@ public class GridGenerator
                 return null;
             }
         }
-
-        // Print
-        string output = "OUPUT\n";
-        for (int i = 0; i < size; i++)
-        {
-            for (int j = 0; j < size; j++)
-            {
-                output += $"[{grid[i, j]}] ";
-            }
-            output += "\n";
-        }
-        Debug.Log(output);
 
         return grid;
     }

@@ -6,9 +6,10 @@ using UnityEngine.Tilemaps;
 public class GridRenderer : MonoBehaviour
 {
     [Header("Componenets")]
+    [SerializeField] private Tilemap waterTilemap;
     [SerializeField] private Tilemap shipTilemap;
     [SerializeField] private Tilemap hiddenTilemap;
-    [SerializeField] private Tile shipTile;
+    [SerializeField] private RuleTile shipTile;
     [SerializeField] private Tile waterTile;
     [SerializeField] private Tile paddingTile;
     [SerializeField] private Tile hiddenTile;
@@ -106,6 +107,7 @@ public class GridRenderer : MonoBehaviour
 
     private void RenderShipGrid(TileState[,] grid)
     {
+        waterTilemap.ClearAllTiles();
         shipTilemap.ClearAllTiles();
 
         int padding = paddingSize;
@@ -114,18 +116,18 @@ public class GridRenderer : MonoBehaviour
         {
             for (int j = -padding; j < n + padding; j++)
             {
+                // Always set water
+                waterTilemap.SetTile(new Vector3Int(i, j), waterTile);
+
                 // Check if out of bounds
                 if (i < 0 || i >= n || j < 0 || j >= n)
-                {
-                    shipTilemap.SetTile(new Vector3Int(i, j), paddingTile);
-                }
-                else
-                {
-                    if (grid[i, j] == TileState.Ship)
-                        shipTilemap.SetTile(new Vector3Int(i, j), shipTile);
-                    else
-                        shipTilemap.SetTile(new Vector3Int(i, j), waterTile);
-                }
+                    continue;
+
+                // If not ship
+                if (grid[i, j] != TileState.Ship)
+                    continue;
+
+                shipTilemap.SetTile(new Vector3Int(i, j), shipTile);
             }
         }
 
