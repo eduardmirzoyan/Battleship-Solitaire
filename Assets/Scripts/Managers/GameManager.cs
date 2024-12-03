@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Transform mapTransform;
-    [SerializeField] private ShipMenuUI shipInfoUI;
 
     [Header("Data")]
     [SerializeField] private GameData gameData;
@@ -56,8 +55,6 @@ public class GameManager : MonoBehaviour
 
         // Pan screen to board
         LeanTween.moveX(mapTransform.gameObject, mapCenterXOffset, transitionTime).setEase(LeanTweenType.easeInOutBack);
-        yield return new WaitForSeconds(transitionTime);
-        shipInfoUI.Open();
     }
 
     public void ToggleTile(Vector3Int position)
@@ -119,18 +116,6 @@ public class GameManager : MonoBehaviour
 
         // Check for wins
         CheckWin(data);
-    }
-
-    public void Restart()
-    {
-        // Reload the current scene
-        TransitionManager.instance.ReloadScene();
-    }
-
-    public void GoToMainMenu()
-    {
-        // Go back to main menu scene
-        TransitionManager.instance.LoadMainMenuScene();
     }
 
     #region Helpers

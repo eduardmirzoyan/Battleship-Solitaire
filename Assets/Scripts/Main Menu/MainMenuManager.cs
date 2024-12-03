@@ -65,20 +65,19 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartLevel(int index)
     {
-
         // Ditch last terminator character
         string str = seedText.text[..^1];
 
         bool success = int.TryParse(str, out int seed);
         if (!success)
-            seed = UnityEngine.Random.Range(1, 1000000); // Random seed between 1 - 1M
+            seed = Random.Range(1, 1000000); // Random seed between 1 - 1M
 
-        var levelData = index switch
+        LevelData levelData = index switch
         {
-            1 => new LevelData(seed, 6, new int[] { 3, 2, 2, 1, 1, 1 }, 3), // Easy
-            2 => new LevelData(seed, 8, new int[] { 3, 3, 2, 2, 2, 1, 1, 1 }, 5), // Medium
-            3 => new LevelData(seed, 10, new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 }, 7), // Hard
-            _ => new LevelData(seed, 1, new int[] { 1, 1, 1 }, 1), // Default
+            1 => new(seed, 6, new int[] { 3, 2, 2, 1, 1, 1 }, 3), // Easy
+            2 => new(seed, 8, new int[] { 3, 3, 2, 2, 2, 1, 1, 1 }, 5), // Medium
+            3 => new(seed, 10, new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 }, 7), // Hard
+            _ => new(seed, 1, new int[] { 1, 1, 1 }, 1), // Default
         };
 
         // Save level

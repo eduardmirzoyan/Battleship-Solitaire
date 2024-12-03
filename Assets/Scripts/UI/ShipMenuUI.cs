@@ -20,13 +20,11 @@ public class ShipMenuUI : MonoBehaviour
     private void Start()
     {
         GameEvents.instance.OnGameStart += SetupShips;
-        GameEvents.instance.OnGameEnd += ShowWin;
     }
 
     private void OnDestroy()
     {
         GameEvents.instance.OnGameStart -= SetupShips;
-        GameEvents.instance.OnGameEnd -= ShowWin;
     }
 
     private void SetupShips(GameData gameData)
@@ -46,20 +44,6 @@ public class ShipMenuUI : MonoBehaviour
 
         seedLabel.text = $"Seed: {gameData.levelData.seed}";
 
-        // Start hovering the window
-        LeanTween.moveLocalY(rectTransform.gameObject, 20f, 2f).setEase(LeanTweenType.easeInOutSine).setLoopPingPong();
-    }
-
-    private void ShowWin(GameData _)
-    {
-        // Show win UI
-        float angle = Random.Range(-10f, 10f);
-        LeanTween.rotateZ(gameWinTranform.gameObject, angle, winTransitionDuration);
-        LeanTween.scale(gameWinTranform.gameObject, Vector3.one, winTransitionDuration).setEase(LeanTweenType.easeOutBack);
-    }
-
-    public void Open()
-    {
         LeanTween.moveLocalX(rectTransform.gameObject, homeXPosition, transitionDuration).setEase(LeanTweenType.easeInOutBack);
     }
 }

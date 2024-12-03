@@ -18,6 +18,7 @@ public class GridRenderer : MonoBehaviour
     [SerializeField] private RuleTile boundaryTile;
     [SerializeField] private GameObject hintPrefab;
     [SerializeField] private Transform hintsTransform;
+    [SerializeField] private Transform gameWinTranform;
 
     [Header("Settings")]
     [SerializeField] private int paddingSize = 5;
@@ -109,9 +110,10 @@ public class GridRenderer : MonoBehaviour
         }
     }
 
-    private void RevealGrid(GameData _)
+    private void RevealGrid(GameData gameData)
     {
         RevealHiddenGrid();
+        ShowWinIcon(gameData.GridSize);
     }
 
     #region Helpers
@@ -238,6 +240,15 @@ public class GridRenderer : MonoBehaviour
         foreach (var hint in columnHints)
             hint.Uninitialize();
         columnHints.Clear();
+    }
+
+    private void ShowWinIcon(int gridSize)
+    {
+        gameWinTranform.position = shipTilemap.transform.parent.position + new Vector3(gridSize / 2f, gridSize / 2f);
+
+        float angle = Random.Range(-10f, 10f);
+        LeanTween.rotateZ(gameWinTranform.gameObject, angle, endGameTransitionDuration);
+        LeanTween.scale(gameWinTranform.gameObject, Vector3.one, endGameTransitionDuration).setEase(LeanTweenType.easeOutBack);
     }
 
     #endregion
