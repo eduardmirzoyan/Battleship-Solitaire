@@ -18,6 +18,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private float hoverStrength = 10f;
     [SerializeField] private float hoverSpeed = 2;
 
+    [SerializeField] private LeanTweenType tweenType = LeanTweenType.easeOutQuad;
+
     public static MainMenuManager instance;
     private void Awake()
     {
@@ -50,17 +52,17 @@ public class MainMenuManager : MonoBehaviour
     public void GoToLevelSelect()
     {
         // Move rightward
-        LeanTween.moveLocalX(mainMenuTransform.gameObject, transitionPositionX, transitionTime).setEase(LeanTweenType.easeInOutBack);
-        LeanTween.moveLocalX(levelSelectTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
-        LeanTween.moveX(backgroundMapTransform.gameObject, transitionPositionX / 50f, transitionTime).setEase(LeanTweenType.easeInOutBack);
+        LeanTween.moveLocalX(mainMenuTransform.gameObject, transitionPositionX, transitionTime).setEase(tweenType);
+        LeanTween.moveLocalX(levelSelectTransform.gameObject, 0, transitionTime).setEase(tweenType);
+        LeanTween.moveX(backgroundMapTransform.gameObject, transitionPositionX / 50f, transitionTime).setEase(tweenType);
     }
 
     public void GoToMainMenu()
     {
         // Move leftward
-        LeanTween.moveLocalX(mainMenuTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
-        LeanTween.moveLocalX(levelSelectTransform.gameObject, -transitionPositionX, transitionTime).setEase(LeanTweenType.easeInOutBack);
-        LeanTween.moveX(backgroundMapTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
+        LeanTween.moveLocalX(mainMenuTransform.gameObject, 0, transitionTime).setEase(tweenType);
+        LeanTween.moveLocalX(levelSelectTransform.gameObject, -transitionPositionX, transitionTime).setEase(tweenType);
+        LeanTween.moveX(backgroundMapTransform.gameObject, 0, transitionTime).setEase(tweenType);
     }
 
     public void StartLevel(int index)
@@ -90,10 +92,10 @@ public class MainMenuManager : MonoBehaviour
     private IEnumerator CloseScene()
     {
         // Fade rightward
-        LeanTween.moveLocalX(levelSelectTransform.gameObject, 2 * transitionPositionX, transitionTime).setEase(LeanTweenType.easeInOutBack);
-        LeanTween.moveX(backgroundMapTransform.gameObject, 2 * (transitionPositionX / 50f), transitionTime).setEase(LeanTweenType.easeInOutBack);
+        LeanTween.moveLocalX(levelSelectTransform.gameObject, 2 * transitionPositionX, 3 * transitionTime).setEase(LeanTweenType.easeInOutBack);
+        LeanTween.moveX(backgroundMapTransform.gameObject, 2 * (transitionPositionX / 50f), 3 * transitionTime).setEase(LeanTweenType.easeInOutBack);
 
-        yield return new WaitForSeconds(transitionTime / 2f);
+        yield return new WaitForSeconds(3 * transitionTime / 2f);
 
         // Change scene
         TransitionManager.instance.LoadNextScene();
@@ -102,17 +104,17 @@ public class MainMenuManager : MonoBehaviour
     public void OpenIntructions()
     {
         // Move leftward
-        LeanTween.moveLocalX(mainMenuTransform.gameObject, -transitionPositionX, transitionTime).setEase(LeanTweenType.easeInOutBack);
-        LeanTween.moveLocalX(instructionsTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
-        LeanTween.moveX(backgroundMapTransform.gameObject, -transitionPositionX / 50f, transitionTime).setEase(LeanTweenType.easeInOutBack);
+        LeanTween.moveLocalX(mainMenuTransform.gameObject, -transitionPositionX, transitionTime).setEase(tweenType);
+        LeanTween.moveLocalX(instructionsTransform.gameObject, 0, transitionTime).setEase(tweenType);
+        LeanTween.moveX(backgroundMapTransform.gameObject, -transitionPositionX / 50f, transitionTime).setEase(tweenType);
     }
 
     public void CloseIntructions()
     {
         // Move rightward
-        LeanTween.moveLocalX(mainMenuTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
-        LeanTween.moveLocalX(instructionsTransform.gameObject, transitionPositionX, transitionTime).setEase(LeanTweenType.easeInOutBack);
-        LeanTween.moveX(backgroundMapTransform.gameObject, 0, transitionTime).setEase(LeanTweenType.easeInOutBack);
+        LeanTween.moveLocalX(mainMenuTransform.gameObject, 0, transitionTime).setEase(tweenType);
+        LeanTween.moveLocalX(instructionsTransform.gameObject, transitionPositionX, transitionTime).setEase(tweenType);
+        LeanTween.moveX(backgroundMapTransform.gameObject, 0, transitionTime).setEase(tweenType);
     }
 
     public void QuitGame()

@@ -27,12 +27,14 @@ public class DraggableUI : MonoBehaviour, IDragHandler, IPointerDownHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        if (eventData.button == PointerEventData.InputButton.Left)
+            rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         // Bring to top
-        rectTransform.SetAsLastSibling();
+        if (eventData.button == PointerEventData.InputButton.Left)
+            rectTransform.SetAsLastSibling();
     }
 }

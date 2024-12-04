@@ -10,8 +10,8 @@ public class ButtonAudio : MonoBehaviour, IPointerEnterHandler
     [Header("References")]
     [SerializeField] private Button button;
 
-    private const string BUTTON_CLICK = "button_click";
-    private const string BUTTON_HOVER = "button_hover";
+    private const string BUTTON_CLICK = "Select";
+    private const string BUTTON_HOVER = "Hover";
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class ButtonAudio : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (button.interactable)
-            AudioManager.instance.PlaySFX(BUTTON_HOVER);
+        // if (button.interactable)
+        //     AudioManager.instance.PlaySFX(BUTTON_HOVER);
     }
 }

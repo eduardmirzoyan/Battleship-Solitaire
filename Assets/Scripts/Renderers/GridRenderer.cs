@@ -5,17 +5,21 @@ using UnityEngine.Tilemaps;
 
 public class GridRenderer : MonoBehaviour
 {
-    [Header("Componenets")]
+    [Header("Tilemaps")]
     [SerializeField] private Tilemap waterTilemap;
     [SerializeField] private Tilemap shipTilemap;
-    [SerializeField] private Tilemap hiddenTilemap;
+    [SerializeField] private Tilemap guessTilemap;
     [SerializeField] private Tilemap boundaryTilemap;
+    [SerializeField] private Tilemap markTilemap;
+
+    [Header("Tiles")]
     [SerializeField] private RuleTile shipTile;
-    [SerializeField] private Tile waterTile;
-    [SerializeField] private Tile hiddenTile;
-    [SerializeField] private Tile guessWaterTile;
-    [SerializeField] private Tile guessShipTile;
+    [SerializeField] private AnimatedTile waterTile;
+    [SerializeField] private RuleTile fogTile;
     [SerializeField] private RuleTile boundaryTile;
+    [SerializeField] private Tile markTile;
+
+    [Header("Other Components")]
     [SerializeField] private GameObject hintPrefab;
     [SerializeField] private Transform hintsTransform;
     [SerializeField] private Transform gameWinTranform;
@@ -181,14 +185,13 @@ public class GridRenderer : MonoBehaviour
     private void RenderGuessGrid(GuessState[,] grid)
     {
         // Reset tilemap
-        hiddenTilemap.ClearAllTiles();
+        guessTilemap.ClearAllTiles();
 
         // Hide tiles if hidden
         int n = grid.GetLength(0);
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
-                if (grid[i, j] == GuessState.Unknown)
-                    hiddenTilemap.SetTile(new Vector3Int(i, j), hiddenTile);
+                SetGuessTile(new Vector3Int(i, j), grid[i, j]);
     }
 
     private void RenderBoundaryGrid(TileState[,] grid)
@@ -214,23 +217,33 @@ public class GridRenderer : MonoBehaviour
 
     private void SetGuessTile(Vector3Int position, GuessState state)
     {
-        // Get tile based on new state
-        Tile tile = state switch
+        switch (state)
         {
-            GuessState.Unknown => hiddenTile,
-            GuessState.Water => guessWaterTile,
-            GuessState.Ship => guessShipTile,
-            _ => null,
-        };
-
-        hiddenTilemap.SetTile(position, tile);
+            case GuessState.Unknown:
+                guessTilemap.SetTile(position, fogTile);
+                markTilemap.SetTile(position, null);
+                break;
+            case GuessState.Water:
+                guessTilemap.SetTile(position, waterTile);
+                markTilemap.SetTile(position, null);
+                break;
+            case GuessState.Ship:
+                guessTilemap.SetTile(position, waterTile);
+                markTilemap.SetTile(position, markTile);
+                break;
+            default:
+                guessTilemap.SetTile(position, null);
+                markTilemap.SetTile(position, null);
+                break;
+        }
     }
 
     private void RevealHiddenGrid()
     {
         // Slowly raise and fade
-        LeanTween.moveLocalY(hiddenTilemap.gameObject, endGamefloatOffset, endGameTransitionDuration).setEase(LeanTweenType.linear);
-        LeanTween.color(hiddenTilemap.gameObject, Color.clear, endGameTransitionDuration);
+        LeanTween.moveLocalY(guessTilemap.gameObject, endGamefloatOffset, endGameTransitionDuration).setEase(LeanTweenType.linear);
+        LeanTween.color(guessTilemap.gameObject, Color.clear, endGameTransitionDuration);
+        LeanTween.color(markTilemap.gameObject, Color.clear, endGameTransitionDuration);
 
         // Clear hints
         foreach (var hint in rowHints)

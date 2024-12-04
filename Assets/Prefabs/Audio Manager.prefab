@@ -61,6 +61,33 @@ MonoBehaviour:
     loop: 1
     audioSource: {fileID: 0}
     audioMixerGroup: {fileID: 3010432625692923313, guid: 800867c0817e27245b5b7bd8063d57cb, type: 2}
-  sfxSounds: []
+  sfxSounds:
+  - name: Toggle
+    audioClips:
+    - {fileID: 8300000, guid: 1afbf38436a32fe47a819fb81d89debb, type: 3}
+    - {fileID: 8300000, guid: 64694616420d9aa48a80515878c18a21, type: 3}
+    - {fileID: 8300000, guid: 8d57128b9fa28f2428f3105eec5383e6, type: 3}
+    - {fileID: 8300000, guid: 52cded25f7feb204e8a27cbcbda11dd9, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    audioSource: {fileID: 0}
+    audioMixerGroup: {fileID: 6634437653376095073, guid: 800867c0817e27245b5b7bd8063d57cb, type: 2}
+  - name: Select
+    audioClips:
+    - {fileID: 8300000, guid: 4325509034e7180468dc83f963c37e19, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    audioSource: {fileID: 0}
+    audioMixerGroup: {fileID: 6634437653376095073, guid: 800867c0817e27245b5b7bd8063d57cb, type: 2}
+  - name: Hover
+    audioClips:
+    - {fileID: 8300000, guid: e24a0338f946eca43a1c9268a97ca634, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    audioSource: {fileID: 0}
+    audioMixerGroup: {fileID: 6634437653376095073, guid: 800867c0817e27245b5b7bd8063d57cb, type: 2}
   fadeTime: 1
   debugName: 

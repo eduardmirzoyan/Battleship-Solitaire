@@ -32,7 +32,6 @@ public class TransitionManager : MonoBehaviour
     public void OpenScene()
     {
         // Play animation
-        //blackScreenTransform.position = Vector3.zero;
         LeanTween.moveLocalX(blackScreenTransform.gameObject, -Screen.width, transitionTime);
 
         // Play background music
@@ -65,9 +64,6 @@ public class TransitionManager : MonoBehaviour
 
     public void ReloadScene()
     {
-        // Stop any background music
-        // AudioManager.instance.StopOST("Background " + GetSceneIndex());
-
         // Stop any transition if one was happening
         if (coroutine != null) StopCoroutine(coroutine);
 
@@ -90,6 +86,8 @@ public class TransitionManager : MonoBehaviour
     private IEnumerator LoadScene(int index)
     {
         // Play animation
+        LeanTween.cancel(blackScreenTransform.gameObject);
+        LeanTween.moveLocalX(blackScreenTransform.gameObject, Screen.width, 0f);
         LeanTween.moveLocalX(blackScreenTransform.gameObject, 0, transitionTime);
 
         // Wait

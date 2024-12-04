@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class PauseMenuUI : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private Transform labelTransform;
+    [SerializeField] private Image toggleIcon;
     [SerializeField] private Transform instructionsTransform;
     [SerializeField] private TextMeshProUGUI instructionsLabel;
 
     [Header("Settings")]
-    [SerializeField] private float openPositionY;
-    [SerializeField] private float closePositionY;
+    [SerializeField] private float openPositionX;
+    [SerializeField] private float closePositionX;
     [SerializeField] private float transitionDuration;
     [SerializeField] private KeyCode toggleKey = KeyCode.Tab;
+    [SerializeField] private Color openColor;
 
     [Header("Debug")]
     [SerializeField] private bool isOpen;
@@ -32,13 +34,13 @@ public class PauseMenuUI : MonoBehaviour
     {
         if (isOpen)
         {
-            LeanTween.moveLocalY(gameObject, closePositionY, transitionDuration).setEase(LeanTweenType.easeInQuad);
-            labelTransform.localScale = new Vector3(1, 1, 1);
+            LeanTween.moveLocalX(gameObject, closePositionX, transitionDuration).setEase(LeanTweenType.easeInQuad);
+            toggleIcon.color = Color.white;
         }
         else
         {
-            LeanTween.moveLocalY(gameObject, openPositionY, transitionDuration).setEase(LeanTweenType.easeInQuad);
-            labelTransform.localScale = new Vector3(1, -1, 1);
+            LeanTween.moveLocalX(gameObject, openPositionX, transitionDuration).setEase(LeanTweenType.easeInQuad);
+            toggleIcon.color = openColor;
         }
 
         isOpen = !isOpen;

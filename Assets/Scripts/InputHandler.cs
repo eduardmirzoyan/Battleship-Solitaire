@@ -17,6 +17,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private bool isGameOver;
 
     private GameData gameData;
+    const int LEFT_CLICK = 0, RIGHT_CLICK = 1;
 
     public static InputHandler instance;
 
@@ -29,6 +30,8 @@ public class InputHandler : MonoBehaviour
             return;
         }
         instance = this;
+
+        isGameOver = true;
     }
 
     private void Start()
@@ -50,6 +53,8 @@ public class InputHandler : MonoBehaviour
 
         HandleHover();
         HandleDrag();
+
+        CameraManager.instance.HandlePan(RIGHT_CLICK);
     }
 
     private void FixedUpdate()
@@ -94,7 +99,7 @@ public class InputHandler : MonoBehaviour
     private void HandleDrag()
     {
         // Start drag
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(LEFT_CLICK))
         {
             // Error check
             if (previousPosition.x < 0 || previousPosition.x >= gridSize || previousPosition.y < 0 || previousPosition.y >= gridSize)
@@ -107,7 +112,7 @@ public class InputHandler : MonoBehaviour
         }
 
         // End drag
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(LEFT_CLICK))
         {
             isDragging = false;
 

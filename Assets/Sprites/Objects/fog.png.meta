@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2c2910c5372f4894cb06963a113d72a9
+guid: e08338a398675ac4b89077608fc1fe2f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -116,7 +116,91 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ship_0
+      name: fog_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a66d3d908d30a7438eaa98ddbc15104
+      internalID: 1757527418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fog_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7ea15d7b17c7d0489f4a9f681ebc7a5
+      internalID: -101539576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fog_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7507a4cddc7a3384ab168bed490af15f
+      internalID: 578298064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fog_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46c95d5b550bd9b4cb08b1257f8ef830
+      internalID: 4618954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fog_4
       rect:
         serializedVersion: 2
         x: 0
@@ -130,14 +214,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb8ab1dc0c7e6ac4dab3f164e7a56b5f
-      internalID: 1169551608
+      spriteID: 1a1286ab173389e4481dfd8dc3cd7c87
+      internalID: -2038459468
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ship_1
+      name: fog_5
       rect:
         serializedVersion: 2
         x: 16
@@ -151,14 +235,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce3c994b24c3bf648a84940575ae6c48
-      internalID: 1799186913
+      spriteID: e1fb08bb895df6246a5bc0360ebb7fe2
+      internalID: 83613504
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ship_2
+      name: fog_6
       rect:
         serializedVersion: 2
         x: 32
@@ -172,14 +256,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4211b8b238bdc7e4f9f74e02dec594a5
-      internalID: 855043337
+      spriteID: 009911b18ba4bcf4490a70f77dbda50c
+      internalID: 1136535435
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ship_3
+      name: fog_7
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee5ec2c9c1f597e4db8a0dd59fc104b8
+      internalID: 1780903242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fog_8
       rect:
         serializedVersion: 2
         x: 0
@@ -193,14 +298,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 456e6b45bff736144a1a9ed866f3f5a2
-      internalID: -186297523
+      spriteID: b50eb732242a42141a6b31632534d63c
+      internalID: -832073750
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ship_4
+      name: fog_9
       rect:
         serializedVersion: 2
         x: 16
@@ -214,14 +319,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81db946a9cdd70640a25e70cae161aac
-      internalID: -562371821
+      spriteID: f51c93a8a40842d419e2dce08ead18a6
+      internalID: 1503875244
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ship_5
+      name: fog_10
       rect:
         serializedVersion: 2
         x: 32
@@ -235,14 +340,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1264cd5751269234dac493382edad5f0
-      internalID: -600244333
+      spriteID: 986378005029b2c4daf23b6894a26afe
+      internalID: -1660752720
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ship_6
+      name: fog_11
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f9842b0da6dfe4d93031fc03d2603f
+      internalID: 672075825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fog_12
       rect:
         serializedVersion: 2
         x: 0
@@ -256,14 +382,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 056067f4864c7bc4ca09c5e84f1ff40f
-      internalID: 1772193488
+      spriteID: 0d2c479de15dceb4c827ec2c097b79fc
+      internalID: 174493922
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ship_7
+      name: fog_13
       rect:
         serializedVersion: 2
         x: 16
@@ -277,8 +403,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b5e39427615c85f468a18855aadad811
-      internalID: -659643651
+      spriteID: 4d4455c3ae0bc094ba32065ad15aa4f9
+      internalID: -846271164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fog_14
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fa3580edcc2def4fa0d8e5f7099651b
+      internalID: 1984440181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fog_15
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 478bf9eb295de924280ccfe909287b2c
+      internalID: -1722855716
       vertices: []
       indices: 
       edges: []
@@ -294,14 +462,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ship_6: 1772193488
-      ship_0: 1169551608
-      ship_2: 855043337
-      ship_3: -186297523
-      ship_7: -659643651
-      ship_4: -562371821
-      ship_5: -600244333
-      ship_1: 1799186913
+      fog_15: -1722855716
+      fog_11: 672075825
+      fog_8: -832073750
+      fog_3: 4618954
+      fog_0: 1757527418
+      fog_7: 1780903242
+      fog_13: -846271164
+      fog_10: -1660752720
+      fog_9: 1503875244
+      fog_1: -101539576
+      fog_2: 578298064
+      fog_14: 1984440181
+      fog_6: 1136535435
+      fog_4: -2038459468
+      fog_5: 83613504
+      fog_12: 174493922
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -88,6 +88,9 @@ public class GameManager : MonoBehaviour
         // Update visuals
         GameEvents.instance.TriggerOnGameUpdate(data);
 
+        // Play sfx
+        AudioManager.instance.PlaySFX("Toggle");
+
         // Check if game is over
         CheckWin(data);
     }

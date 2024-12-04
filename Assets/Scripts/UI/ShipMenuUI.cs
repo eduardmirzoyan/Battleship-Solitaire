@@ -6,7 +6,6 @@ using TMPro;
 public class ShipMenuUI : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private Transform gameWinTranform;
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private TextMeshProUGUI seedLabel;
     [SerializeField] private TextMeshProUGUI[] shipCountLabels;
@@ -15,7 +14,6 @@ public class ShipMenuUI : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float homeXPosition = 660f;
     [SerializeField] private float transitionDuration = 1f;
-    [SerializeField] private float winTransitionDuration = 1f;
 
     private void Start()
     {
@@ -39,7 +37,7 @@ public class ShipMenuUI : MonoBehaviour
         for (int i = 0; i < maxShipSize; i++)
         {
             if (counts[i] == 0) shipCountObjects[i].SetActive(false);
-            else shipCountLabels[i].text = $"x{counts[i]}";
+            else shipCountLabels[i].text = $"{counts[i]}x";
         }
 
         seedLabel.text = $"Seed: {gameData.levelData.seed}";
