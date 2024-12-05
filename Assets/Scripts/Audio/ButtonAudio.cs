@@ -1,17 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class ButtonAudio : MonoBehaviour, IPointerEnterHandler
+public class ButtonAudio : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Button button;
 
-    private const string BUTTON_CLICK = "Select";
-    private const string BUTTON_HOVER = "Hover";
+    private const string BUTTON_CLICK = "Click";
 
     private void Awake()
     {
@@ -22,11 +20,5 @@ public class ButtonAudio : MonoBehaviour, IPointerEnterHandler
     private void PlayClickAudio()
     {
         AudioManager.instance.PlaySFX(BUTTON_CLICK);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        // if (button.interactable)
-        //     AudioManager.instance.PlaySFX(BUTTON_HOVER);
     }
 }

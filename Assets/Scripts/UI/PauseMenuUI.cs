@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class PauseMenuUI : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private Image toggleIcon;
+    [SerializeField] private Image toggleMenuIcon;
+    [SerializeField] private Image toggleInstructionsIcon;
     [SerializeField] private Transform instructionsTransform;
     [SerializeField] private TextMeshProUGUI instructionsLabel;
 
@@ -16,7 +17,7 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private float closePositionX;
     [SerializeField] private float transitionDuration;
     [SerializeField] private KeyCode toggleKey = KeyCode.Tab;
-    [SerializeField] private Color openColor;
+    [SerializeField] private Color activeColor;
 
     [Header("Debug")]
     [SerializeField] private bool isOpen;
@@ -35,12 +36,12 @@ public class PauseMenuUI : MonoBehaviour
         if (isOpen)
         {
             LeanTween.moveLocalX(gameObject, closePositionX, transitionDuration).setEase(LeanTweenType.easeInQuad);
-            toggleIcon.color = Color.white;
+            toggleMenuIcon.color = Color.white;
         }
         else
         {
             LeanTween.moveLocalX(gameObject, openPositionX, transitionDuration).setEase(LeanTweenType.easeInQuad);
-            toggleIcon.color = openColor;
+            toggleMenuIcon.color = activeColor;
         }
 
         isOpen = !isOpen;
@@ -52,11 +53,13 @@ public class PauseMenuUI : MonoBehaviour
         {
             LeanTween.scale(instructionsTransform.gameObject, Vector3.zero, transitionDuration).setEase(LeanTweenType.easeInQuad);
             instructionsLabel.text = "Show Rules";
+            toggleInstructionsIcon.color = Color.white;
         }
         else
         {
             LeanTween.scale(instructionsTransform.gameObject, Vector3.one, transitionDuration).setEase(LeanTweenType.easeOutQuad);
             instructionsLabel.text = "Hide Rules";
+            toggleInstructionsIcon.color = activeColor;
         }
 
         showInstructions = !showInstructions;

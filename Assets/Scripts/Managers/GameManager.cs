@@ -85,11 +85,11 @@ public class GameManager : MonoBehaviour
         // Set next state
         data.guessGrid[position.x, position.y] = nextState;
 
-        // Update visuals
-        GameEvents.instance.TriggerOnGameUpdate(data);
-
         // Play sfx
         AudioManager.instance.PlaySFX("Toggle");
+
+        // Update visuals
+        GameEvents.instance.TriggerOnGameUpdate(data);
 
         // Check if game is over
         CheckWin(data);
@@ -113,6 +113,9 @@ public class GameManager : MonoBehaviour
                 if (data.guessGrid[index, i] == GuessState.Unknown)
                     data.guessGrid[index, i] = GuessState.Water;
         }
+
+        // Play sfx
+        AudioManager.instance.PlaySFX("Clear Line");
 
         // Update visuals
         GameEvents.instance.TriggerOnGameUpdate(data);
@@ -154,7 +157,14 @@ public class GameManager : MonoBehaviour
         }
 
         if (hasWon)
+        {
+            // Play sfx
+            AudioManager.instance.PlaySFX("Game Win");
+
+            // Update visuals
             GameEvents.instance.TriggerOnGameEnd(data);
+        }
+
     }
 
     #endregion

@@ -12,19 +12,22 @@ public class AudioToggle : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private string source;
+    [SerializeField] private float defaultVolume = 0f;
 
-    private float defaultVolume;
+    const float MUTE_VOLUME = -80f;
 
     private void Start()
     {
+        if (defaultVolume == MUTE_VOLUME)
+            throw new System.Exception($"Default volume cannot be {defaultVolume}!");
+
         bool found = audioMixer.GetFloat(source, out float volume);
-        if (!found) throw new System.Exception($"Parameter '{source}' does not exit!");
+        if (!found)
+            throw new System.Exception($"Parameter '{source}' does not exit!");
 
-        // Save starting volume as default
-        defaultVolume = volume;
-
-        // Hide mute
-        slashIcon.enabled = false;
+        // Hide mute based on state
+        bool muted = volume != defaultVolume;
+        slashIcon.enabled = muted;
     }
 
     public void Toggle()
@@ -33,9 +36,9 @@ public class AudioToggle : MonoBehaviour
         if (!found) throw new System.Exception($"Parameter '{source}' does not exit!");
 
         // Toggle current state
-        if (volume > -80f) // Not mute
+        if (volume == defaultVolume) // Not mute
         {
-            audioMixer.SetFloat(source, -80f);
+            audioMixer.SetFloat(source, MUTE_VOLUME);
             slashIcon.enabled = true;
         }
         else
