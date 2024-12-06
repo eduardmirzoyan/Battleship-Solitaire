@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class InputHandler : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Tilemap selectTilemap;
@@ -19,7 +19,7 @@ public class InputHandler : MonoBehaviour
     private GameData gameData;
     const int LEFT_CLICK = 0, RIGHT_CLICK = 1;
 
-    public static InputHandler instance;
+    public static InputManager instance;
 
     private void Awake()
     {
@@ -79,6 +79,8 @@ public class InputHandler : MonoBehaviour
 
     private void Initialize(GameData gameData)
     {
+        if (gameData == null) return;
+
         this.gameData = gameData;
         this.gridSize = gameData.GridSize;
         this.isGameOver = false;

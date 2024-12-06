@@ -46,11 +46,18 @@ public class GameManager : MonoBehaviour
         var shipGrid = GridGenerator.GenerateShipGrid(levelData.seed, levelData.gridSize, levelData.ships);
         var guessGrid = GridGenerator.GenerateHiddenGrid(levelData.seed, shipGrid, levelData.numHints);
 
+        // Check if something went wrong
         if (shipGrid == null || guessGrid == null)
-            yield return null;
+        {
+            // Create invalid game
+            gameData = null;
+        }
+        else
+        {
+            // Create game
+            gameData = new GameData(levelData, shipGrid, guessGrid);
+        }
 
-        // Create game
-        gameData = new GameData(levelData, shipGrid, guessGrid);
         GameEvents.instance.TriggerOnGameStart(gameData);
 
         // Pan screen to board

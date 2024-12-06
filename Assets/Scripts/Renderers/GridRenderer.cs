@@ -49,6 +49,8 @@ public class GridRenderer : MonoBehaviour
 
     private void RenderGrids(GameData gameData)
     {
+        if (gameData == null) return;
+
         RenderShipGrid(gameData.shipGrid);
         RenderGuessGrid(gameData.guessGrid);
         RenderHints(gameData.shipGrid);

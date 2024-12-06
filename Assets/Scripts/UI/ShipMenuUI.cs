@@ -27,6 +27,8 @@ public class ShipMenuUI : MonoBehaviour
 
     private void SetupShips(GameData gameData)
     {
+        if (gameData == null) return;
+
         int maxShipSize = shipCountLabels.Length;
         var ships = gameData.levelData.ships;
         int[] counts = new int[maxShipSize];
